@@ -12,8 +12,8 @@ module Services
     end
 
     def initialize(hostname: nil)
-      # @stub = Grpcw.greeters
-      @stub = GRPC_STUB.greeters
+      @stub = Grpcw.greeters
+      # @stub = GRPC_STUB.greeters
     end
 
     def say_hello(message:)
