@@ -7,27 +7,36 @@ end
 class Grpcw
   attr_reader :stub
 
-  def initialize(stub:)
-    @stub = stub
+  def initialize(service_module:)
+    @stub = service_module::Stub.new(GRPC_URL, :this_channel_is_insecure)
   end
+
+  def greeters(*args)
+    puts  " = "*50
+    puts args
+    puts  " = "*50
+    stub
+  end
+  
+  # INFO: Call any methods return stub
+  # Need comment if wrapper.respond_to?(method) in GRPC_STUB
+  # def method_missing(method, *args)
+  #   # return wrapper.send(method, *args) if wrapper.respond_to?(method)
+  #   puts  " + "*50
+  #   puts args
+  #   puts  " + "*50
+  #   stub
+  # end
 end
 
 class GRPC_STUB
-  class << self
-    def wrapper
-      @wrapper ||= Grpcw.new(stub: Helloworld::Greeter::Stub.new(GRPC_URL, :this_channel_is_insecure))
-    end
+  include Singleton
 
-    def greeters
-      wrapper.stub
-    end 
-    # INFO: All methods calls sending to wrapper
-    # def method_missing(method, *args)
-    #   return wrapper.send(method, *args) if wrapper.respond_to?(method)
-    # end
-
-    # def respond_to_missing?(method, include_private=false)
-    #   wrapper.respond_to?(method)
-    # end
-  end  
+  def wrapper
+    @wrapper ||= Grpcw.new(service_module: Helloworld::Greeter)
+  end
+  
+  def method_missing(method, *args)
+    return wrapper.send(method, *args) if wrapper.respond_to?(method)
+  end
 end  
