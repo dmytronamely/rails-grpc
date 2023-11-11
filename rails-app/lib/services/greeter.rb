@@ -12,7 +12,6 @@ module Services
     end
 
     def initialize(hostname: nil)
-      # @stub = Grpcw.greeters
       @stub = GRPC_STUB.greeters
     end
 
