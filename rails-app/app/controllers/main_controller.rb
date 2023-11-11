@@ -28,8 +28,7 @@ class MainController < ApplicationController
     {
       version: '0.0.1',
       timeout: timeout,
-      # object_id: Grpcw.greeters.object_id,
-      object_id: Grpcw.object_id,
+      object_id: Grpcw.greeters.object_id,
       ruby: RUBY_VERSION,
       rails: Gem.loaded_specs['rails'].version.version,
       puma: Gem.loaded_specs['puma'].version.version,
