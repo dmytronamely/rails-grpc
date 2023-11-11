@@ -5,10 +5,10 @@ GRPC_URL = ENV.fetch('GRPC_URL') do
 end
 
 class Grpcw
-  attr_reader :greeters
+  attr_reader :stub
 
   def initialize(stub:)
-    @greeters = stub
+    @stub = stub
   end
 end
 
@@ -19,7 +19,15 @@ class GRPC_STUB
     end
 
     def greeters
-      wrapper.greeters
-    end  
+      wrapper.stub
+    end 
+    # INFO: All methods calls sending to wrapper
+    # def method_missing(method, *args)
+    #   return wrapper.send(method, *args) if wrapper.respond_to?(method)
+    # end
+
+    # def respond_to_missing?(method, include_private=false)
+    #   wrapper.respond_to?(method)
+    # end
   end  
 end  
