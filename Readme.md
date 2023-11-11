@@ -19,3 +19,8 @@ docker-compose run --rm app rake db:create
 ```
 
 GOTO: http://localhost:3000/main/index.json
+
+##### Provided GRPC error (return 500)
+```ruby
+RuntimeError (grpc cannot be used before and after forking):
+```
