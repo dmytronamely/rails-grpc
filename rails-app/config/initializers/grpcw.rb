@@ -25,4 +25,15 @@ class Grpcw
   # end
 end
 
-GRPC_STUB = Grpcw.new(stub: Helloworld::Greeter::Stub.new("#{ENV.fetch('GRPC_SERVER_HOST', 'localhost')}:#{ENV.fetch('GRPC_SERVER_PORT', 50051)}", :this_channel_is_insecure)).freeze
+# GRPC_STUB = Grpcw.new(stub: Helloworld::Greeter::Stub.new("#{ENV.fetch('GRPC_SERVER_HOST', 'localhost')}:#{ENV.fetch('GRPC_SERVER_PORT', 50051)}", :this_channel_is_insecure)).freeze
+
+class GRPC_STUB
+  class << self
+    def client
+      Grpcw.new(stub: Helloworld::Greeter::Stub.new("#{ENV.fetch('GRPC_SERVER_HOST', 'localhost')}:#{ENV.fetch('GRPC_SERVER_PORT', 50051)}", :this_channel_is_insecure))
+    end  
+    def greeters
+      client.greeters
+    end  
+  end  
+end  
