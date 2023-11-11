@@ -1,0 +1,32 @@
+  version: "3.9"
+  services:
+    app:
+      build: ./rails-app
+      ports: 
+        - 3000:3000
+      environment:
+        RAILS_ENV: production
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWD: example
+        POSTGRES_HOST: db
+        GRPC_SERVER_HOST: grpc_server
+        GRPC_SERVER_PORT: 50051
+        RAILS_LOG_TO_STDOUT: 1
+      command: bundle exec rails s -b 0.0.0.0
+      depends_on:
+        - db
+        - grpc_server
+    grpc_server:
+      build: ./rails-app
+      ports: 
+        - 50051:50051
+      environment:
+        GRPC_SERVER_HOST: 0.0.0.0
+        GRPC_SERVER_PORT: 50051
+      command: bundle exec ruby lib/grpc/server.rb
+      depends_on:
+          - db
+    db:
+      image: postgres:13-alpine
+      environment:
+        POSTGRES_PASSWORD: example
