@@ -29,9 +29,15 @@ class Grpcw
   # end
 end
 
-class GRPC_STUB
+class GRPC_BASE
   include Singleton
 
+  class << self
+    alias_method :svc, :instance
+  end
+end  
+
+class GRPC_STUB < GRPC_BASE
   def wrapper
     @wrapper ||= Grpcw.new(service_module: Helloworld::Greeter)
   end

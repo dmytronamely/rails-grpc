@@ -12,7 +12,7 @@ module Services
     end
 
     def initialize(hostname: nil)
-      @stub = GRPC_STUB.instance.greeters(hello: 'Hellow', world: 'World')
+      @stub = GRPC_STUB.svc.greeters(hello: 'Hellow', world: 'World')
     end
 
     def say_hello(message:)
