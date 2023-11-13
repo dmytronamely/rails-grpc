@@ -32,17 +32,21 @@ end
 class GRPC_BASE
   include Singleton
 
+  def wrapper
+    raise NoMethodError, 'Not Implemented'
+  end  
+
   class << self
     alias_method :svc, :instance
+  end
+
+  def method_missing(method, *args)
+    return wrapper.send(method, *args) if wrapper.respond_to?(method)
   end
 end  
 
 class GRPC_STUB < GRPC_BASE
   def wrapper
     @wrapper ||= Grpcw.new(service_module: Helloworld::Greeter)
-  end
-  
-  def method_missing(method, *args)
-    return wrapper.send(method, *args) if wrapper.respond_to?(method)
   end
 end  
