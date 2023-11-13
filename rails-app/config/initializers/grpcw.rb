@@ -41,7 +41,7 @@ class GRPC_BASE
   end
 
   def method_missing(method, *args)
-    return wrapper.send(method, *args) if wrapper.respond_to?(method)
+    wrapper.send(method, *args) if wrapper.respond_to?(method)
   end
 end  
 
