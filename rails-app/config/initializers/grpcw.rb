@@ -38,10 +38,6 @@ class GRPC_SVC_BASE
 
   class << self
     alias_method :svc, :instance
-
-    # def method_missing(class_method, *args, &block)
-    #   svc.send(class_method, *args) if svc.respond_to?(class_method)
-    # end
   end
 
   def method_missing(method, *args)
