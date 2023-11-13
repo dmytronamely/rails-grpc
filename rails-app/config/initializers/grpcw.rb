@@ -29,7 +29,7 @@ class Grpcw
   # end
 end
 
-class GRPC_BASE
+class GRPC_SVC_BASE
   include Singleton
 
   def wrapper
@@ -38,6 +38,10 @@ class GRPC_BASE
 
   class << self
     alias_method :svc, :instance
+
+    # def method_missing(class_method, *args, &block)
+    #   svc.send(class_method, *args) if svc.respond_to?(class_method)
+    # end
   end
 
   def method_missing(method, *args)
@@ -45,7 +49,7 @@ class GRPC_BASE
   end
 end  
 
-class GRPC_STUB < GRPC_BASE
+class GRPC_STUB < GRPC_SVC_BASE
   def wrapper
     @wrapper ||= Grpcw.new(service_module: Helloworld::Greeter)
   end
