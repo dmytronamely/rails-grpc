@@ -12,7 +12,7 @@
         GRPC_SERVER_HOST: grpc_server
         GRPC_SERVER_PORT: 50051
         RAILS_LOG_TO_STDOUT: 1
-        GRPC_ENABLE_FORK_SUPPORT: 1
+        RAILS_MAX_THREADS: 10
       command: bundle exec rails s -b 0.0.0.0
       depends_on:
         - db
@@ -24,7 +24,7 @@
       environment:
         GRPC_SERVER_HOST: 0.0.0.0
         GRPC_SERVER_PORT: 50051
-        GRPC_ENABLE_FORK_SUPPORT: 1
+        RAILS_MAX_THREADS: 10
       command: bundle exec ruby lib/grpc/server.rb
       depends_on:
           - db
