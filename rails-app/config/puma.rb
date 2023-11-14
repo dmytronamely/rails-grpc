@@ -3,8 +3,10 @@ state_path ENV.fetch('PUMA_STATE_FILE', '/tmp/puma.state')
 
 # workers ENV.fetch('WEB_CONCURRENCY') { 4 }
 port ENV.fetch("PORT") { 3000 }
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i
-threads threads_count, threads_count
+workers 0
+max_threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }
+min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
+threads min_threads_count, max_threads_count
 
 # preload_app!
 # on_worker_boot do
