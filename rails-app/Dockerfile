@@ -1,6 +1,6 @@
 FROM ruby:3.1.4 AS builder
 COPY Gemfile* .
-RUN gem install grpc:1.49.1
+RUN gem install grpc:1.59.2
 
 RUN bundle install
 
